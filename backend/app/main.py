@@ -1,8 +1,11 @@
-from contextlib import asynccontextmanager
 import logging
+from contextlib import asynccontextmanager
 from typing import Any, AsyncGenerator, Dict
+
 from fastapi import FastAPI, Request
+
 from app.config import get_settings
+from app.api.v1 import api_v1_router
 
 LOGGER = logging.getLogger("api")
 
@@ -22,6 +25,8 @@ app = FastAPI(
     version=settings.VERSION,
     lifespan=lifespan,
 )
+
+app.include_router(api_v1_router)
 
 
 @app.get("/health")
