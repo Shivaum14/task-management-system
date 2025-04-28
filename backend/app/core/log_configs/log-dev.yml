@@ -1,0 +1,30 @@
+version: 1
+disable_existing_loggers: False
+
+formatters:
+  simple:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  nicelog:
+    (): app.core.logger.ConsoleFormatter
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: nicelog
+    stream: ext://sys.stdout
+
+
+loggers:
+  uvicorn.error:
+    level: INFO
+    handlers: [ console ]
+    propagate: no
+  uvicorn.access:
+    level: CRITICAL # Blocks all access logs as we have our own middleware
+    handlers: [ console ]
+    propagate: no
+
+root:
+  level: DEBUG
+  handlers: [ console ]
