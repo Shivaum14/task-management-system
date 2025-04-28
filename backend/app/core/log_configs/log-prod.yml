@@ -1,0 +1,41 @@
+version: 1
+formatters:
+  simple:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  json:
+    (): pythonjsonlogger.jsonlogger.JsonFormatter
+    reserved_attrs:
+      - threadName
+      - processName
+      - thread
+      - process
+      - levelno
+      - pathname
+      - funcName
+      - relativeCreated
+      - msg
+      - args
+      - msecs
+      - created
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: json
+    stream: ext://sys.stdout
+
+loggers:
+  uvicorn.error:
+    level: INFO
+    handlers: [ console ]
+    propagate: no
+  uvicorn.access:
+    level: ERROR
+    handlers: [ console ]
+    propagate: no
+
+
+root:
+  level: DEBUG
+  handlers: [ console ]
