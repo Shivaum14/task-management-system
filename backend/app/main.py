@@ -4,8 +4,8 @@ from typing import Any, AsyncGenerator, Dict
 
 from fastapi import FastAPI, Request
 
-from app.config import get_settings
 from app.api.v1 import api_v1_router
+from app.config import get_settings
 
 LOGGER = logging.getLogger("api")
 
