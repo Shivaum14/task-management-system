@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.v1 import board, task
+from . import board, task
 
 api_v1_router = APIRouter(prefix="/v1")
 

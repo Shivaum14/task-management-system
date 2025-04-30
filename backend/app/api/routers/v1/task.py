@@ -2,14 +2,14 @@ from uuid import UUID, uuid4
 
 from fastapi import APIRouter, HTTPException
 
+from app.api.schemas.task import TaskCreate, TaskResponse, TaskUpdateStatus
 from app.core.in_memory_db import boards, tasks
 from app.models.task import Task
-from app.schemas.task import TaskCreate, TaskResponse, TaskUpdateStatus
 
 router = APIRouter(prefix="/task", tags=["Task"])
 
 
-@router.post("/", response_model=TaskResponse)
+@router.post("", response_model=TaskResponse)
 def create_task(task: TaskCreate) -> TaskResponse:
     if UUID(task.board_uid) not in boards:
         raise HTTPException(status_code=404, detail="Board not found.")

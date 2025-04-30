@@ -1,23 +1,14 @@
 import logging
-from contextlib import asynccontextmanager
-from typing import Any, AsyncGenerator, Dict
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 
-from app.api.v1 import api_v1_router
+from app.api.routers import api_v1_router, healthcheck_router
 from app.config import get_settings
+from app.core.lifespan import lifespan
 
 LOGGER = logging.getLogger("api")
 
 settings = get_settings()
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-    LOGGER.info("Task Management Service API is Starting Up")
-    yield
-    LOGGER.info("Task Management Service API is Shutting Down")
-
 
 app = FastAPI(
     title="Task Management API",
@@ -27,21 +18,12 @@ app = FastAPI(
 )
 
 app.include_router(api_v1_router)
-
-
-@app.get("/health")
-def health(request: Request) -> Dict[str, Any]:
-    return {
-        "status": "ok",
-        "root_path": request.scope.get("root_path"),
-        "host": request.headers.get("host"),
-    }
+app.include_router(healthcheck_router)
 
 
 if __name__ == "__main__":
     import uvicorn
 
-    settings = get_settings()
     uvicorn.run(
         "app.main:app",
         host=settings.HOST,
