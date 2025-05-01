@@ -14,7 +14,7 @@ help:
 
 # Build the Docker images
 build:
-	docker compose -f $(DOCKER_COMPOSE_FILE) --profile full  build
+	docker compose -f $(DOCKER_COMPOSE_FILE) --profile full  build --no-cache
 
 # Run the necessary services using Docker Compose
 run:
