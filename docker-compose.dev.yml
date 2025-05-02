@@ -1,0 +1,45 @@
+services:
+  tms-backend:
+    container_name: tms-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - APP_LOG_CONFIG=app/core/log_configs/log-dev.yml
+      - APP_ENVIRONMENT=dev
+    ports:
+      - "8010:${APP_PORT}"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${APP_PORT}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: on-failure
+    depends_on:
+      tms-postgres:
+        condition: service_healthy
+    profiles:
+      - full
+
+  tms-postgres:
+    image: postgres:16.3-alpine3.20
+    container_name: tms-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: task_management_db
+    ports:
+      - "54321:5432"
+    volumes:
+      - task_management_system_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  task_management_system_pg_data:

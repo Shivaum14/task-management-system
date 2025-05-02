@@ -2,15 +2,15 @@ from uuid import UUID, uuid4
 
 from fastapi import APIRouter
 
+from app.api.schemas.board import BoardCreate, BoardResponse
+from app.api.schemas.task import TaskResponse
 from app.core.in_memory_db import boards, tasks
 from app.models.board import Board
-from app.schemas.board import BoardCreate, BoardResponse
-from app.schemas.task import TaskResponse
 
 router = APIRouter(prefix="/board", tags=["Board"])
 
 
-@router.post("/", response_model=BoardResponse)
+@router.post("", response_model=BoardResponse)
 def create_board(board: BoardCreate) -> BoardResponse:
     board_uid = uuid4()
     new_board = Board(uid=board_uid, title=board.title, owner="anonymous")
@@ -18,7 +18,7 @@ def create_board(board: BoardCreate) -> BoardResponse:
     return BoardResponse(uid=str(board_uid), title=board.title, owner="anonymous")
 
 
-@router.get("/", response_model=list[BoardResponse])
+@router.get("", response_model=list[BoardResponse])
 def list_boards() -> list[BoardResponse]:
     return [BoardResponse(uid=str(board.uid), title=board.title, owner=board.owner) for board in boards.values()]
 

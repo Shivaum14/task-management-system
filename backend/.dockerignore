@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.pyc
+.env
+.env.*
+.venv/
+.env/
+Dockerfile*
+README.md
+.git
+.gitignore
+tests/
+scripts/
+.mypy_cache
+
