@@ -1,5 +1,13 @@
+"""
+Database engine and session setup for SQLAlchemy.
+
+This module initializes the SQLAlchemy engine and session factory (`SessionLocal`)
+using application settings. It also provides a `get_db_session` dependency for use
+in FastAPI routes or services.
+"""
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, declarative_base, sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 
 from app.config import get_settings
 
@@ -20,9 +28,7 @@ SessionLocal = sessionmaker(
     bind=engine,
 )
 
-# Base class for declarative models (tables)
-Base = declarative_base()
-
 
 def get_db_session() -> Session:
+    """Creates a new database session."""
     return SessionLocal()

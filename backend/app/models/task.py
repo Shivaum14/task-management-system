@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Column, ForeignKey, String
-from sqlalchemy.orm import Mapped, relationship
+from sqlalchemy import ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.orm import BaseMixin
 from app.core.utils import generate_uid
-from app.db.session import Base
+from app.db.base import Base
 
 if TYPE_CHECKING:
     from app.models import Board
@@ -14,11 +14,11 @@ if TYPE_CHECKING:
 class Task(Base, BaseMixin):
     __tablename__ = "task"
 
-    uid: Mapped[str] = Column(String, primary_key=True, default=generate_uid)
-    title: Mapped[str] = Column(String, nullable=False)
-    description: Mapped[str] = Column(String, nullable=False)
-    status: Mapped[str] = Column(String, nullable=False, default="todo")  # todo, in_progress, done
-    board_uid: Mapped[str] = Column(
+    uid: Mapped[str] = mapped_column(String, primary_key=True, default=generate_uid)
+    title: Mapped[str] = mapped_column(String, nullable=False)
+    description: Mapped[str] = mapped_column(String, nullable=True)
+    status: Mapped[str] = mapped_column(String, nullable=False, default="todo")  # todo, in_progress, done
+    board_uid: Mapped[str] = mapped_column(
         String,
         ForeignKey("board.uid", ondelete="CASCADE"),
         nullable=False,

@@ -8,7 +8,12 @@ from app.models import Board
 
 
 def create_board(session: Session, board_in: BoardCreate) -> Board:
-    db_board = Board(title=board_in.title, owner="anonymous@example.com")  # Owner will come from Auth later
+    db_board = Board(
+        title=board_in.title,
+        owner="anonymous@example.com",
+        created_by="anonymous@example.com",
+        updated_by="anonymous@example.com",
+    )  # Owner will come from Auth later
     session.add(db_board)
     session.commit()
     return db_board
@@ -16,7 +21,7 @@ def create_board(session: Session, board_in: BoardCreate) -> Board:
 
 def get_boards(session: Session) -> List[Board]:
     query = select(Board)
-    return session.execute(query).scalars().all()
+    return list(session.execute(query).scalars().all())
 
 
 def get_board_by_uid(session: Session, uid: str) -> Optional[Board]:
@@ -26,4 +31,4 @@ def get_board_by_uid(session: Session, uid: str) -> Optional[Board]:
 
 def board_exists(session: Session, uid: str) -> bool:
     query = select(exists().where(Board.uid == uid))
-    return session.execute(query).scalar()
+    return bool(session.execute(query).scalar())

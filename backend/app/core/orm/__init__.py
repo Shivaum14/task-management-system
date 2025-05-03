@@ -1,7 +1,8 @@
-from .rest import RestMixin
+from .serialization import SerializableMixin
+from .audit import AuditMixin
 
 
-class BaseMixin(RestMixin):
-    """Default mixin for the API."""
+class BaseMixin(SerializableMixin, AuditMixin):
+    """Base mixin used to provide additional functionality for SQLAlchemy models."""
 
     pass

@@ -1,3 +1,5 @@
+"""FastAPI lifespan context manager for managing application startup and shutdown events."""
+
 import logging
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator

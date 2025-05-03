@@ -31,7 +31,7 @@ def upgrade() -> None:
         "task",
         sa.Column("uid", sa.String(), nullable=False),
         sa.Column("title", sa.String(), nullable=False),
-        sa.Column("description", sa.String(), nullable=False),
+        sa.Column("description", sa.String(), nullable=True),
         sa.Column("status", sa.String(), nullable=False),
         sa.Column("board_uid", sa.String(), nullable=False),
         sa.ForeignKeyConstraint(["board_uid"], ["board.uid"], ondelete="CASCADE"),

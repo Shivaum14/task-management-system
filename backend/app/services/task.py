@@ -18,6 +18,8 @@ def create_task(session: SessionDep, task_in: TaskCreate) -> Task:
         description=task_in.description,
         board_uid=task_in.board_uid,
         status="todo",
+        created_by="anonymous@example.com",
+        updated_by="anonymous@example.com",
     )
     session.add(db_task)
     session.commit()
@@ -28,7 +30,7 @@ def get_tasks(session: Session, board_uid: Optional[str] = None) -> list[Task]:
     query = select(Task)
     if board_uid:
         query = query.where(Task.board_uid == board_uid)
-    return session.execute(query).scalars().all()
+    return list(session.execute(query).scalars().all())
 
 
 def get_task_by_uid(session: Session, task_uid: str) -> Optional[Task]:

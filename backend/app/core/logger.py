@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 """Logger package."""
+
 import copy
 import logging
 from typing import Any
