@@ -2,7 +2,7 @@ import logging
 
 from fastapi import FastAPI
 
-from app.api.routers import api_v1_router, healthcheck_router
+from app.api.routers import api_v1_router, health_router
 from app.config import get_settings
 from app.core.lifespan import lifespan
 
@@ -18,7 +18,7 @@ app = FastAPI(
 )
 
 app.include_router(api_v1_router)
-app.include_router(healthcheck_router)
+app.include_router(health_router)
 
 
 if __name__ == "__main__":

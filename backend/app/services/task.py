@@ -3,13 +3,12 @@ from typing import Optional
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.api.dependencies import SessionDep
 from app.api.schemas.task import TaskCreate
 from app.models import Task
 from app.services.board import board_exists
 
 
-def create_task(session: SessionDep, task_in: TaskCreate) -> Task:
+def create_task(session: Session, task_in: TaskCreate) -> Task:
     if not board_exists(session, task_in.board_uid):
         raise ValueError("Board not found")
 
