@@ -1,5 +1,5 @@
-from .serialization import SerializableMixin
 from .audit import AuditMixin
+from .serialization import SerializableMixin
 
 
 class BaseMixin(SerializableMixin, AuditMixin):

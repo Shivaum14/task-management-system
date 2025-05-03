@@ -4,7 +4,7 @@ from sqlalchemy import String
 from sqlalchemy.orm import Mapped, relationship
 
 from app.core.orm import BaseMixin
-from app.core.orm.uitls import mapped_column
+from app.core.orm.utils import mapped_column
 from app.core.utils import generate_uid
 from app.db.base import Base
 

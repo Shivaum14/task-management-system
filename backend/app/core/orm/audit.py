@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, declared_attr
 
 from app.core.datetime import utc_now
 
-from .uitls import mapped_column
+from .utils import mapped_column
 
 
 class TimestampMixin:

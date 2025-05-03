@@ -1,9 +1,10 @@
 from typing import TYPE_CHECKING
 
 from sqlalchemy import ForeignKey, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, relationship
 
 from app.core.orm import BaseMixin
+from app.core.orm.utils import mapped_column
 from app.core.utils import generate_uid
 from app.db.base import Base
 
