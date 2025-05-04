@@ -5,15 +5,16 @@ from sqlalchemy.orm import Session
 
 from app.api.schemas.board import BoardCreate
 from app.models import Board
+from app.models.user import User
 
 
-def create_board(session: Session, board_in: BoardCreate) -> Board:
+def create_board(session: Session, owner: User, board_in: BoardCreate) -> Board:
     db_board = Board(
         title=board_in.title,
-        owner="anonymous@example.com",
-        created_by="anonymous@example.com",
-        updated_by="anonymous@example.com",
-    )  # Owner will come from Auth later
+        owner=owner.email,
+        created_by=owner.email,
+        updated_by=owner.email,
+    )
     session.add(db_board)
     session.commit()
     return db_board

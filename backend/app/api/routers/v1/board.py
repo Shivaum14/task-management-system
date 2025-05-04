@@ -11,7 +11,7 @@ router = APIRouter(prefix="/board", tags=["Board"])
 
 @router.post("", response_model=BoardResponse)
 def create_board(context: Context, board_input: BoardCreate) -> BoardResponse:
-    new_board = create_board_db(context.session, board_input)
+    new_board = create_board_db(context.session, context.owner, board_input)
     return new_board.to_schema(BoardResponse)
 
 

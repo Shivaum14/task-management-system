@@ -10,7 +10,7 @@ router = APIRouter(prefix="/task", tags=["Task"])
 
 @router.post("", response_model=TaskResponse)
 def create_task(context: Context, task_input: TaskCreate) -> TaskResponse:
-    task = create_task_service(context.session, task_input)
+    task = create_task_service(context.session, context.owner, task_input)
     return task.to_schema(TaskResponse)
 
 
