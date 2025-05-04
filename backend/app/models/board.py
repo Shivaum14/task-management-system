@@ -3,10 +3,10 @@ from typing import TYPE_CHECKING
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, relationship
 
+from app.core.db import Base
 from app.core.orm import BaseMixin
 from app.core.orm.utils import mapped_column
 from app.core.utils import generate_uid
-from app.db.base import Base
 
 if TYPE_CHECKING:
     from app.models import Task

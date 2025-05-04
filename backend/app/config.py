@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     PG_PORT: int
     PG_DB_NAME: str
 
+    AUTH0_DOMAIN: str
+    AUTH0_API_AUDIENCE: str
+
     @computed_field
     def DB_URL(self) -> PostgresDsn:
         return PostgresDsn.build(
