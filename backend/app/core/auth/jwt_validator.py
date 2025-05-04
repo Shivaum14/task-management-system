@@ -9,7 +9,7 @@ from app.config import get_settings
 settings = get_settings()
 
 
-class JWTValdiator:
+class JWTValidator:
     def __init__(self) -> None:
         jwks_url = f"https://{settings.AUTH0_DOMAIN}/.well-known/jwks.json"
         self.jwks = self.get_jwk(jwks_url)

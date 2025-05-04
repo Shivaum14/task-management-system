@@ -10,12 +10,12 @@ from app.core.db.session import get_db_session
 from app.models.user import User
 from app.services.user import get_or_create_user
 
-from .jwt_validator import JWTValdiator
+from .jwt_validator import JWTValidator
 
 settings = get_settings()
 
 oauth2_scheme = HTTPBearer(auto_error=True)
-jwt_validator = JWTValdiator()
+jwt_validator = JWTValidator()
 
 
 def fetch_user_info(token: str) -> Dict[str, Any]:
@@ -44,7 +44,7 @@ def fetch_user_info(token: str) -> Dict[str, Any]:
 
 def get_owner(
     security_scopes: SecurityScopes,
-    crendentials: HTTPAuthorizationCredentials = Security(oauth2_scheme),
+    credentials: HTTPAuthorizationCredentials = Security(oauth2_scheme),
     session: Session = Depends(get_db_session),
 ) -> User:
     """
@@ -62,7 +62,7 @@ def get_owner(
     Returns:
         The user object associated with the access token.
     """
-    token = crendentials.credentials
+    token = credentials.credentials
     payload = jwt_validator.validate_token(token, security_scopes.scopes)
     user_info = fetch_user_info(token)
 
