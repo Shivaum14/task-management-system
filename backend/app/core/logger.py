@@ -2,7 +2,7 @@
 
 import copy
 import logging
-from typing import Any
+from typing import Any, MutableMapping, Tuple
 
 
 class ConsoleFormatter(logging.Formatter):
@@ -46,3 +46,18 @@ class ConsoleFormatter(logging.Formatter):
         kv = " ".join([f"{k}={record.__dict__[k]}" for k in set(record.__dict__.keys()).difference(self.ignore_keys)])
         record.msg = f"{record.msg} {kv}"
         return self.fmt.format(record)
+
+
+class MergeLoggerAdapter(logging.LoggerAdapter):  # type: ignore
+    def process(self, msg: Any, kwargs: MutableMapping[str, Any]) -> Tuple[Any, MutableMapping[str, Any]]:
+        """
+        Process the Logging message and keyword arguments passed in to
+        a logging call to insert contextual information. The extra argument
+        of the LoggerAdapter will be merged with the extra argument of the
+        logging call where the logging call's argument take precedence.
+        """
+        try:
+            kwargs["extra"] = {**self.extra, **kwargs["extra"]}  # type: ignore
+        except KeyError:  # pragma: no cover
+            kwargs["extra"] = self.extra  # pragma: no cover
+        return msg, kwargs

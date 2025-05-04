@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.api.schemas.task import TaskCreate
 from app.models import Task
-from app.services.board import board_exists
 from app.models.user import User
+from app.services.board import board_exists
 
 
 def create_task(session: Session, owner: User, task_in: TaskCreate) -> Task:
